@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 10:30:46 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/14 15:45:58 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/14 17:57:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_redir
 {
 	int			type; // REDIR_IN, REDIR_OUT, HEREDOC, APPEND
 	char			*file; // filename or heredoc delimiter
+	int	fd; // set it to -1 by default in main
 	struct s_redir	*next;
 }					t_redir;
 
@@ -109,7 +110,7 @@ void				ft_env_update(t_env *env, const char *key,
 void				ft_sig(void);
 int					ft_pwd(void);
 int					ft_cd(char **args, t_env *env);
-int					ft_export(t_env *env, char *key);
+int					ft_export(t_env *env, char **args);
 int					ft_unset(t_env *env, char *key);
 
 // in init_env
@@ -119,12 +120,8 @@ t_env_var			*ft_new_env_var(char *envp);
 void				ft_append_env_var(t_env *env, t_env_var *node);
 t_env				*ft_init_env(char **envp);
 
-// in check_do_cmd
-void				ft_check_do_cmd(char **cmd_input, t_env *env,
-						t_cmd **cmd_list);
-
-// in ft_lstsize.c
-int					ft_lstsize(t_env *env);
+// in ft_lstsize.c => change file name to avoid confusion with Libft function
+int					ft_envsize(t_env *env);
 
 // parsing :
 
@@ -133,4 +130,28 @@ t_token				*ft_tokenizer(char **input);
 
 // in parser
 t_cmd				*ft_parser(t_token **token_list);
+
+/*EXECUTOR => change name when file created*/
+int	ft_execute(t_cmd *cmds, t_env *env);
+int	ft_exec_single_builtin(t_cmd *cmd, t_env *env); // save/restore stdio
+int	ft_is_builtin(char *cmd_name);
+int	ft_exec_builtin(t_cmd *cmd, t_env *env, int exit_flag); // for child
+
+/*REDIRECTIONS => change name when file created*/
+void ft_apply_redirs(t_redir *redirs);
+int ft_collect_heredocs(t_cmd *cmds); // pre-fork => fills redir -> fd
+
+/*EXPANDER => change name when file created*/
+void ft_expand_cmds(t_cmd *cmds, t_env *env, int last_status);
+char *ft_expand_str(char *str, t_env *env, int last_status);
+
+/*UTILS / CLEANUP => change name when file created*/
+void ft_free_tokens(t_token *tk);
+void ft_free_redirs(t_redir *rd);
+void ft_free_cmds(t_cmd *cmd);
+int ft_cmdsize(t_cmd *cmds); // iterate cmd list for pid allocation
+
+/*MAIN LOOP => change name when file created*/
+void ft_shell_loop(t_env *env);
+
 #endif
