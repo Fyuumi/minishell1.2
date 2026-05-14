@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: opaulman <opaulman@student.42.fr>          +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/07 17:07:05 by cdenaux           #+#    #+#              #
-#    Updated: 2026/05/14 16:07:10 by opaulman         ###   ########.fr        #
+#    Updated: 2026/05/14 18:16:42 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,19 +24,26 @@ RM = rm -f
 
 # Tous les fichiers sources (mandatory)
 SRCS = 	main.c \
-		Builtins/ft_echo.c \
-		Builtins/ft_exit.c \
-		Builtins/ft_pwd.c \
-		Builtins/ft_env.c \
-		Builtins/ft_unset.c \
-		Builtins/ft_export.c \
 		Builtins/ft_cd.c \
-		Execution/check_do_cmd.c \
-		Utils/init_env.c \
+		Builtins/ft_echo.c \
+		Builtins/ft_env.c \
+		Builtins/ft_exit.c \
+		Builtins/ft_export.c \
+		Builtins/ft_pwd.c \
+		Builtins/ft_unset.c \
+		Execution/ft_apply_redirs.c \
+		Execution/ft_builtin.c \
+		Execution/ft_execute.c \
+		Execution/ft_heredoc.c \
+		Expansion/ft_expand.c \
+		Parsing/ft_parser.c \
+		Parsing/ft_tokenizer.c \
 		Utils/cmd_utils.c \
-		Utils/ft_lstsize.c\
-		Parsing/ft_tokenizer.c\
-		Parsing/ft_parser.c\
+		Utils/ft_cleanup.c \
+		Utils/ft_envsize.c \
+		Utils/ft_shell_loop.c \
+		Utils/ft_sig.c \
+		Utils/init_env.c \
 
 INCLUDE = -I. -I$(LIBFT_PATH)
 
