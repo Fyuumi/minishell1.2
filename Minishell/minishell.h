@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opaulman <opaulman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 10:30:46 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/14 16:30:58 by opaulman         ###   ########.fr       */
+/*   Updated: 2026/05/14 15:45:58 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,22 +70,24 @@ typedef struct s_token
 // Arg1 echo hey NULL Arg2 wc NULL
 typedef struct s_redir
 {
-	t_type			type;
-	char			*file;
+	int			type; // REDIR_IN, REDIR_OUT, HEREDOC, APPEND
+	char			*file; // filename or heredoc delimiter
 	struct s_redir	*next;
 }					t_redir;
 
 typedef struct s_cmd // Each t_cmd represents a segment between pipes
 {
-	char **args;        // argv: ["ls", "-la", NULL]
-	t_redir *redirs;    // List of redirections
-	struct s_cmd *next; // Next command in the pipe
+	char **argv;        // execve compatible: ["ls", "-la", NULL]
+	t_redir *redirs;    // List of redirections for THIS cmd
+	struct s_cmd *next; // Next command in the pipeline
 }					t_cmd;
 
 typedef struct s_expand_ctx
 {
 	t_env *env;      // To solve $VAR
 	int last_status; // To solve $?
+	int stdin_backup; // For redirection restoration
+	int stdout_backup; // For redirection restoration
 }					t_expand_ctx;
 
 /*Global variable signal*/
@@ -101,19 +103,13 @@ char				*ft_get_cmd_path(char *cmd, char **envp);
 
 /*In Builtins*/
 int					ft_echo(char **args);
-
 int					ft_env(t_env *env);
 void				ft_env_update(t_env *env, const char *key,
 						const char *value);
-
 void				ft_sig(void);
-
 int					ft_pwd(void);
-
 int					ft_cd(char **args, t_env *env);
-
 int					ft_export(t_env *env, char *key);
-
 int					ft_unset(t_env *env, char *key);
 
 // in init_env
