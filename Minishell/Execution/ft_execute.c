@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 18:17:09 by codespace         #+#    #+#             */
-/*   Updated: 2026/05/15 14:44:01 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/15 19:50:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int ft_execute(t_cmd *cmds, t_env *env)
 
     //If only ONE command and it is a builtin -> NO FORK
     if (!cmds->next && ft_is_builtin(cmds->argv[0]))
+    {
+        ft_apply_redirs(cmds->redirs); // apply redirs IN PARENT
         return (ft_exec_single_builtin(cmds, env));
+    } 
     
     while (cur)
     {

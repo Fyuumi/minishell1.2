@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 10:30:46 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/15 14:00:06 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/15 18:00:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int					ft_echo(char **args);
 int					ft_env(t_env *env);
 void				ft_env_update(t_env *env, const char *key,
 						const char *value);
-void				ft_sig(void);
 int					ft_pwd(void);
 int					ft_cd(char **args, t_env *env);
 int 				ft_export(t_env *env, char *key);
@@ -143,7 +142,7 @@ t_cmd				*ft_parser(t_token *token_list);
 int	ft_execute(t_cmd *cmds, t_env *env);
 int	ft_exec_single_builtin(t_cmd *cmd, t_env *env); // save/restore stdio
 int	ft_is_builtin(char *cmd_name);
-int	ft_exec_builtin(t_cmd *cmd, t_env *env, int exit_flag); // for child
+int	ft_exec_builtin(t_cmd *cmd, t_env *env);
 
 /*REDIRECTIONS => change name when file created*/
 void ft_apply_redirs(t_redir *redirs);
@@ -154,9 +153,11 @@ void ft_expand_cmds(t_cmd *cmds, t_env *env, int last_status);
 char *ft_expand_str(char *str, t_env *env, int last_status);
 
 /*UTILS / CLEANUP => change name when file created*/
+void	free_strtab(char **strtab); // in Utils/errors.c
 void ft_free_tokens(t_token *tk);
 void ft_free_redirs(t_redir *rd);
 void ft_free_cmds(t_cmd *cmd);
+void				ft_sig(void);
 int ft_cmdsize(t_cmd *cmds); // iterate cmd list for pid allocation
 
 /*MAIN LOOP => change name when file created*/
