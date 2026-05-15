@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 10:30:46 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/15 11:08:07 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/15 14:00:06 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,12 @@ t_env				*ft_init_env(char **envp);
 int					ft_envsize(t_env *env);
 
 // parsing :
+
+/*In cmd_utils*/
+char	*get_path(char **envp);
+char	*get_cmd_path(char *cmd, char **envp);
+void	ft_run_execve(char **argv, t_env *env);
+
 
 // in tokenizer
 void				ft_tokenizer(char **input, t_token **token_list);
