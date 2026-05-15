@@ -12,6 +12,109 @@
 
 #include "minishell.h"
 
+const char	*token_type_to_str(t_type type)
+{
+	if (type == WORD)
+		return ("WORD");
+	else if (type == PIPE)
+		return ("PIPE");
+	else if (type == REDIR_IN)
+		return ("REDIR_IN");
+	else if (type == REDIR_OUT)
+		return ("REDIR_OUT");
+	else if (type == HEREDOC)
+		return ("HEREDOC");
+	else if (type == APPEND)
+		return ("APPEND");
+	return ("UNKNOWN");
+}
+
+void	print_tokens(t_token *tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens)
+	{
+		printf("Token %d:\n", i);
+		printf("  type : %s\n", token_type_to_str(tokens->type));
+		printf("  str  : %s\n", tokens->str);
+		tokens = tokens->next;
+		i++;
+	}
+}
+
+void	print_redirs(t_redir *redir)
+{
+	int	i;
+
+	i = 0;
+	while (redir)
+	{
+		printf("    Redirection %d:\n", i);
+		printf("      type : %s\n", token_type_to_str(redir->type));
+		printf("      file : %s\n", redir->file);
+		printf("      fd   : %d\n", redir->fd);
+		redir = redir->next;
+		i++;
+	}
+}
+
+void	print_cmds(t_cmd *cmds)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (cmds)
+	{
+		printf("=================================\n");
+		printf("Command %d:\n", i);
+
+		/* Print argv */
+		if (cmds->argv)
+		{
+			j = 0;
+			printf("  argv:\n");
+			while (cmds->argv[j])
+			{
+				printf("    [%d] %s\n", j, cmds->argv[j]);
+				j++;
+			}
+		}
+		else
+			printf("  argv: NULL\n");
+
+		/* Print redirections */
+		if (cmds->redirs)
+		{
+			printf("  redirs:\n");
+			print_redirs(cmds->redirs);
+		}
+		else
+			printf("  redirs: NONE\n");
+
+		cmds = cmds->next;
+		i++;
+	}
+	printf("=================================\n");
+}
+
+int ft_tokensize(t_token *token)
+{
+	t_token *temp;
+	int count;
+
+	count = 0;
+	temp = token;
+	while(temp)
+	{
+		count++;
+		temp = temp->next;
+	}
+	return (count);
+}
+
 t_redir	*ft_create_redir_node(t_token *token_node)
 {
 	t_redir	*redir_node;
@@ -25,33 +128,63 @@ t_redir	*ft_create_redir_node(t_token *token_node)
 	return (redir_node);
 }
 
-t_cmd	*ft_parser(t_token **token_list)
+t_cmd	*ft_create_parser_node(t_token *token_list, t_cmd *parse_list)
 {
-	t_cmd *parse_list;    // parsing system
-	t_token *current;     // copy of token_list
-	t_redir *redir_infos; // for storing the redirections in the parsing system
-	current = *token_list;
-	while (current && current->str)
+	t_cmd *parser_node;
+	int i;
+	char **temp;
+
+	i = 0;
+	parse_list = NULL;
+	temp = malloc(sizeof(char*) * (ft_tokensize(token_list) + 1));
+	if (!temp)
+		return (NULL);
+	while(token_list && token_list->type == WORD)
 	{
-		if (current->type == REDIR_IN)
+		temp[i++] = token_list->str;
+		token_list = token_list->next;
+	}
+	temp[i] = NULL;
+	parser_node = malloc(sizeof(t_cmd));
+	if (!parser_node)
+		return (NULL);
+	parser_node->argv = temp;
+	parser_node->next = NULL;
+	if(parse_list)
+	{
+		parse_list->next = parser_node;
+		parse_list->next->next = NULL;
+	}
+	else
+		parse_list = parser_node;
+	return (parse_list);
+}
+
+t_cmd	*ft_parser(t_token *token_list)
+{
+	t_cmd	*parse_list;    // parsing system
+	
+	parse_list = NULL;
+	while (token_list && token_list->str)
+	{
+		if (token_list->type == REDIR_IN || token_list->type == REDIR_OUT)
 		{
-			current = current->next; // skip the redirector
-			if (current)
-			{
-				redir_infos = ft_create_redir_node(current);
-				parse_list->redirs = redir_infos;
+			token_list = token_list->next; // skip the redirector
+			parse_list->redirs = ft_create_redir_node(token_list);
 				// copy tokens info to the redirector in parselist
-				current = current->next;
-			}
-			continue ;
 		}
-		if (current->type == PIPE)
+		else if (token_list->type == PIPE)
 		{
 			parse_list = parse_list->next; // arg++ because of Pipe
-			current = current->next;
 		}
-		ft_strjoin(*parse_list->args, current->str); // adding to new Pipe
-		current = current->next;
+		else if (token_list->type == WORD)
+		{
+			parse_list = ft_create_parser_node(token_list, parse_list);// adding to new Pipe
+			parse_list->redirs = NULL;
+			while(token_list && token_list->next && token_list->next->type == WORD)
+				token_list = token_list->next;
+		}
+		token_list = token_list->next;
 	}
 	return (parse_list);
 }
