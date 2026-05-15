@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int ft_lstsize(t_env *env)
+int ft_envsize(t_env *env)
 {
     t_env_var *temp;
     int count;
