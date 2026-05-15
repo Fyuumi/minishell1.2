@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 10:30:46 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/14 17:57:20 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/15 11:08:07 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ typedef struct s_token
 // Arg1 echo hey NULL Arg2 wc NULL
 typedef struct s_redir
 {
-	int			type; // REDIR_IN, REDIR_OUT, HEREDOC, APPEND
+	t_type			type; // REDIR_IN, REDIR_OUT, HEREDOC, APPEND
 	char			*file; // filename or heredoc delimiter
-	int	fd; // set it to -1 by default in main
+	int				fd; // set it to -1 by default in main
 	struct s_redir	*next;
 }					t_redir;
 
