@@ -13,30 +13,33 @@
 #include "minishell.h"
 
 // creates a list with the tokens
-t_token	*ft_append_token(t_token **token_list, t_token *token_node)
+void	ft_append_token(t_token **token_list, t_token *token_node)
 {
 	t_token	*current;
 
+	if(!*token_list)
+	{
+		*token_list = token_node;
+		return;
+	}
 	current = *token_list;
 	while (current->next)
 		current = current->next;
 	current->next = token_node;
-	current->next->next = NULL;
-	return (current);
 }
 t_type	ft_typecheck(char *input)
 {
 	t_type	type;
 
-	if (ft_strncmp(input, "|", 1))
+	if (ft_strncmp(input, "|", 1) == 0)
 		type = PIPE;
-	else if (ft_strncmp(input, "<<", 2))
+	else if (ft_strncmp(input, "<<", 2) == 0)
 		type = HEREDOC;
-	else if (ft_strncmp(input, ">>", 2))
+	else if (ft_strncmp(input, ">>", 2) == 0)
 		type = APPEND;
-	else if (ft_strncmp(input, ">", 1))
+	else if (ft_strncmp(input, ">", 1) == 0)
 		type = REDIR_IN;
-	else if (ft_strncmp(input, "<", 1))
+	else if (ft_strncmp(input, "<", 1) == 0)
 		type = REDIR_OUT;
 	else
 		type = WORD;
@@ -49,27 +52,24 @@ t_token	*ft_create_token_node(t_type token_type, char *input)
 	token_node = malloc(sizeof(t_token));
 	if (!token_node)
 		return (NULL);
-	ft_strlcpy(token_node->str, input, ft_strlen(input));
+	token_node->str = ft_strdup(input);
 	token_node->next = NULL;
 	token_node->type = token_type;
 	return (token_node);
 }
 
-t_token	*ft_tokenizer(char **input)
+void	ft_tokenizer(char **input, t_token **token_list)
 {
-	t_token	*token_list;
 	t_token	*token;
 	t_type	type;
 	int		i;
 
-	token_list = NULL;
 	i = 0;
 	while (input[i])
 	{
 		type = ft_typecheck(input[i]);
 		token = ft_create_token_node(type, input[i]);
-		token_list = ft_append_token(&token_list, token);
+		ft_append_token(token_list, token);
 		i++;
 	}
-	return (token_list);
 }
