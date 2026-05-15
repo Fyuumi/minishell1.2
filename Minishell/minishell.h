@@ -110,7 +110,7 @@ void				ft_env_update(t_env *env, const char *key,
 void				ft_sig(void);
 int					ft_pwd(void);
 int					ft_cd(char **args, t_env *env);
-int					ft_export(t_env *env, char **args);
+int 				ft_export(t_env *env, char *key);
 int					ft_unset(t_env *env, char *key);
 
 // in init_env
@@ -126,10 +126,12 @@ int					ft_envsize(t_env *env);
 // parsing :
 
 // in tokenizer
-t_token				*ft_tokenizer(char **input);
+void				ft_tokenizer(char **input, t_token **token_list);
 
 // in parser
-t_cmd				*ft_parser(t_token **token_list);
+void				print_tokens(t_token *tokens);
+void				print_cmds(t_cmd *cmds);
+t_cmd				*ft_parser(t_token *token_list);
 
 /*EXECUTOR => change name when file created*/
 int	ft_execute(t_cmd *cmds, t_env *env);

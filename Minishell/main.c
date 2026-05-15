@@ -45,9 +45,11 @@ int	main(int argc, char **argv, char **envp)
 		if (*input)
 			add_history(input);
 		cmd_input = ft_split(input, ' ');
-		token_list = ft_tokenizer(cmd_input);
-		cmd_list = ft_parser(&token_list);
-		ft_check_do_cmd(cmd_input, env, &cmd_list);
+		ft_tokenizer(cmd_input, &token_list);
+		//print_tokens(token_list);
+		cmd_list = ft_parser(token_list);
+		print_cmds(cmd_list);
+		//ft_check_do_cmd(cmd_input, env, &cmd_list);
 		// parse and execute the command
 		free(input);
 	}
