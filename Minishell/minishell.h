@@ -110,6 +110,7 @@ void				ft_env_update(t_env *env, const char *key,
 void				ctrl_c(int signal);
 void				ctrl_d(int signal);
 void				ft_sig(void);
+void 				ft_exit(int n);
 //ft_export:
 int 				ft_export(char **args, t_env *env);
 int					ft_unset(char **args, t_env *env);
@@ -123,11 +124,11 @@ void				ft_append_env_var(t_env *env, t_env_var *node);
 t_env				*ft_init_env(char **envp);
 
 // in ft_lstsizes.c
-int					ft_listsizes(t_env *env);
+int 				ft_listsizes(void* content);
 
 /******* In Parsing   *****/
 // in ft_tokenizer
-void				ft_tokenizer(char **input, t_token **token_list);
+t_token				*ft_tokenizer(char **input, t_token *token_list);
 
 // in ft_parser
 void				print_tokens(t_token *tokens);
@@ -142,33 +143,34 @@ char				*ft_get_cmd_path(char *cmd, char **envp);
 char	*get_path(char **envp);
 char	*get_cmd_path(char *cmd, char **envp);
 void	ft_run_execve(char **argv, t_env *env);
+
 //free_and_errors:
-void	free_strtab(char **strtab);
-
-
-/*EXECUTOR => change name when file created*/
-int	ft_execute(t_cmd *cmds, t_env *env);
-int	ft_exec_single_builtin(t_cmd *cmd, t_env *env); // save/restore stdio
-int	ft_is_builtin(char *cmd_name);
-int	ft_exec_builtin(t_cmd *cmd, t_env *env);
-
-/*REDIRECTIONS => change name when file created*/
-void ft_apply_redirs(t_redir *redirs);
-int ft_collect_heredocs(t_cmd *cmds); // pre-fork => fills redir -> fd
-
-/*EXPANDER => change name when file created*/
-void ft_expand_cmds(t_cmd *cmds, t_env *env, int last_status);
-char *ft_expand_str(char *str, t_env *env, int last_status);
-
-/*UTILS / CLEANUP => change name when file created*/
-void	free_strtab(char **strtab); // in Utils/errors.c
+void	ft_free_strtab(char **strtab);
 void 	ft_free_tokens(t_token *tk);
 void 	ft_free_redirs(t_redir *rd);
 void	ft_free_cmds(t_cmd *cmd);
 
+/******* In Execution  *****/
+// ft_execute.c
+int	ft_execute(t_cmd *cmds, t_env *env);
+
+// ft_builtin
+int	ft_exec_single_builtin(t_cmd *cmd, t_env *env); // save/restore stdio
+int	ft_builtin_check(char *cmd_name);
+int	ft_exec_builtin(t_cmd *cmd, t_env *env);
 
 
-/*MAIN LOOP => change name when file created*/
-void ft_shell_loop(t_env *env);
+
+// /*REDIRECTIONS => change name when file created*/
+// void ft_apply_redirs(t_redir *redirs);
+// int ft_collect_heredocs(t_cmd *cmds); // pre-fork => fills redir -> fd
+
+// /*EXPANDER => change name when file created*/
+// void ft_expand_cmds(t_cmd *cmds, t_env *env, int last_status);
+// char *ft_expand_str(char *str, t_env *env, int last_status);
+
+// /*MAIN LOOP => change name when file created*/
+// void ft_shell_loop(t_env *env);
+
 
 #endif

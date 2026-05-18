@@ -20,6 +20,19 @@
 //     return (0);
 // } 
 
+int ft_is_valid_identifier(char *str)
+{
+    int i;
+
+    i = 0;
+    while(str[i] && str[i]!= '=')
+    {
+        if (!ft_isalnum(str[i]))
+            return (0);
+        i++;
+    }
+    return (1);
+}
 int ft_export(char **args, t_env *env)
 {
     int i;
@@ -32,13 +45,17 @@ int ft_export(char **args, t_env *env)
     i = 1;
     while (args[i])
     {
-        if (!is_valid_identifier(args[i])) // e.g. "123" or "A-B"
+        if (ft_is_valid_identifier(args[i]) == 0)
         {
             ft_putstr_fd("export: not a valid identifier\n", STDERR_FILENO);
             ret = 1;
         }
         else
-            ft_add_or_update_env(env, args[i]); // our helper *** TO BUILD **
+        {
+             ft_append_env_var(env, ft_new_node(args[0], NULL)); // old one
+            // ft_add_or_update_env(env, args[i]); // our helper *** TO BUILD **
+        }
+            // ft_add_or_update_env(env, args[i]); // our helper *** TO BUILD **
         i++;
     }
     return (ret);

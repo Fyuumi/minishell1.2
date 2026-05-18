@@ -70,7 +70,7 @@ char	*get_cmd_path(char *cmd, char **envp)
 		cmd_path = join_check_path(paths[i], cmd);
 		i++;
 	}
-	free_strtab(paths);
+	ft_free_strtab(paths);
 	return (cmd_path);
 }
 

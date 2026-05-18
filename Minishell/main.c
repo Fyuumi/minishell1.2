@@ -37,11 +37,13 @@ int	main(int argc, char **argv, char **envp)
 		if (*input)
 			add_history(input);
 		cmd_input = ft_split(input, ' ');
-		ft_tokenizer(cmd_input, &token_list);
+		token_list = ft_tokenizer(cmd_input, token_list);
 		//print_tokens(token_list);
 		cmd_list = ft_parser(token_list);
 		print_cmds(cmd_list); //prints the list of arguments
-		ft_exec_builtin(cmd_list, env);
+		//ft_exec_builtin(cmd_list, env);
+		ft_free_cmds(cmd_list);
 		free(input);
+		ft_free_strtab(cmd_input);
 	}
 }

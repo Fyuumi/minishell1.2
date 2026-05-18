@@ -36,7 +36,7 @@ char	**ft_env_to_envp(t_env *env)
 	int			i;
 
 	i = 0;
-	envp = malloc(sizeof(char *) * ft_envsize(env) + 1);
+	envp = malloc(sizeof(char *) * ft_listsizes(env) + 1);
 	if (!envp)
 		return (NULL);
 	current = env->vars;

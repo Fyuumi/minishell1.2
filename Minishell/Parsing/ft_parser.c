@@ -68,7 +68,7 @@ void	print_cmds(t_cmd *cmds)
 	i = 0;
 	while (cmds)
 	{
-		printf("=================================\n");
+		write(1,"=================================\n",20);
 		printf("Command %d:\n", i);
 
 		/* Print argv */
