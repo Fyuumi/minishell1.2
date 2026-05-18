@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sig.c                                           :+:      :+:    :+:   */
+/*   free_and_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/14 18:33:01 by codespace         #+#    #+#             */
-/*   Updated: 2026/05/14 18:34:15 by codespace        ###   ########.fr       */
+/*   Created: 2026/05/15 17:59:40 by codespace         #+#    #+#             */
+/*   Updated: 2026/05/18 11:10:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*ft_sig sets SIGINT and SIGQUIT handlers for the parent (interactive mode).
-Uses rl_replace_line, rl_on_new_line, rl_redisplay.*/
+void	free_strtab(char **strtab)
+{
+	int	i;
+
+	if (!strtab)
+		return ;
+	i = 0;
+	while (strtab[i])
+	{
+		free(strtab[i]);
+		i++;
+	}
+	free(strtab);
+}
+

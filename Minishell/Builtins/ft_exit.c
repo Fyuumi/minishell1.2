@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 12:50:24 by codespace         #+#    #+#             */
-/*   Updated: 2026/04/23 12:50:27 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/18 10:51:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,13 @@ void	ctrl_d(int signal)
 
 	exit(1);
 }
+
+/*ft_sig sets SIGINT and SIGQUIT handlers for the parent (interactive mode).
+Uses rl_replace_line, rl_on_new_line, rl_redisplay.*/
+
 void	ft_sig(void)
 {
 	signal(SIGQUIT, SIG_IGN); // stops control c from closing
 	signal(SIGINT, ctrl_d);   // control d closing
-	signal(SIGINT, ctrl_c);   // gives control c a new thing to do
-	
+	signal(SIGINT, ctrl_c);   // gives control c a new thing to do	
 }

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 10:30:46 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/15 18:00:44 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/18 11:11:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,26 +92,29 @@ typedef struct s_expand_ctx
 }					t_expand_ctx;
 
 /*Global variable signal*/
-
 extern int			g_signal_received;
 // Only global allowed. Handles SIGINT and SIGQUIT.
 
-/*In cmd_utils.c*/
-void				ft_free_strings(char **args);
-char				*ft_get_path(char **envp);
-int					ft_is_exe(char *path);
-char				*ft_get_cmd_path(char *cmd, char **envp);
 
-/*In Builtins*/
+
+/***** In Builtins/ *****/
+//ft_cd:
+int					ft_cd(char **args, t_env *env);
+//ft_echo:
 int					ft_echo(char **args);
+//ft_env:
 int					ft_env(t_env *env);
 void				ft_env_update(t_env *env, const char *key,
 						const char *value);
+//ft_exit:
+void				ctrl_c(int signal);
+void				ctrl_d(int signal);
+void				ft_sig(void);
+//ft_export:
+int 				ft_export(char **args, t_env *env);
+int					ft_unset(char **args, t_env *env);
+//ft_pwd:
 int					ft_pwd(void);
-int					ft_cd(char **args, t_env *env);
-int 				ft_export(t_env *env, char *key);
-int					ft_unset(t_env *env, char *key);
-
 // in init_env
 t_env_var			*ft_new_node(const char *key, const char *value);
 char				**ft_env_to_envp(t_env *env);
@@ -124,11 +127,16 @@ int					ft_envsize(t_env *env);
 
 // parsing :
 
-/*In cmd_utils*/
+/***** In Utils/ *****/
+//cmd_utils_v2:
+char				*ft_get_path(char **envp);
+int					ft_is_exe(char *path);
+char				*ft_get_cmd_path(char *cmd, char **envp);
 char	*get_path(char **envp);
 char	*get_cmd_path(char *cmd, char **envp);
 void	ft_run_execve(char **argv, t_env *env);
-
+//free_and_errors:
+void	free_strtab(char **strtab);
 
 // in tokenizer
 void				ft_tokenizer(char **input, t_token **token_list);
