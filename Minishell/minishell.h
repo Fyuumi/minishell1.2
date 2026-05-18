@@ -122,10 +122,17 @@ t_env_var			*ft_new_env_var(char *envp);
 void				ft_append_env_var(t_env *env, t_env_var *node);
 t_env				*ft_init_env(char **envp);
 
-// in ft_lstsize.c => change file name to avoid confusion with Libft function
-int					ft_envsize(t_env *env);
+// in ft_lstsizes.c
+int					ft_listsizes(t_env *env);
 
-// parsing :
+/******* In Parsing   *****/
+// in ft_tokenizer
+void				ft_tokenizer(char **input, t_token **token_list);
+
+// in ft_parser
+void				print_tokens(t_token *tokens);
+void				print_cmds(t_cmd *cmds);
+t_cmd				*ft_parser(t_token *token_list);
 
 /***** In Utils/ *****/
 //cmd_utils_v2:
@@ -138,13 +145,6 @@ void	ft_run_execve(char **argv, t_env *env);
 //free_and_errors:
 void	free_strtab(char **strtab);
 
-// in tokenizer
-void				ft_tokenizer(char **input, t_token **token_list);
-
-// in parser
-void				print_tokens(t_token *tokens);
-void				print_cmds(t_cmd *cmds);
-t_cmd				*ft_parser(t_token *token_list);
 
 /*EXECUTOR => change name when file created*/
 int	ft_execute(t_cmd *cmds, t_env *env);
@@ -162,11 +162,11 @@ char *ft_expand_str(char *str, t_env *env, int last_status);
 
 /*UTILS / CLEANUP => change name when file created*/
 void	free_strtab(char **strtab); // in Utils/errors.c
-void ft_free_tokens(t_token *tk);
-void ft_free_redirs(t_redir *rd);
-void ft_free_cmds(t_cmd *cmd);
-void				ft_sig(void);
-int ft_cmdsize(t_cmd *cmds); // iterate cmd list for pid allocation
+void 	ft_free_tokens(t_token *tk);
+void 	ft_free_redirs(t_redir *rd);
+void	ft_free_cmds(t_cmd *cmd);
+
+
 
 /*MAIN LOOP => change name when file created*/
 void ft_shell_loop(t_env *env);
