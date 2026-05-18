@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/07 17:07:05 by cdenaux           #+#    #+#              #
-#    Updated: 2026/05/15 13:25:48 by codespace        ###   ########.fr        #
+#    Updated: 2026/05/15 18:01:08 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS = 	main.c \
 		Parsing/ft_parser.c \
 		Parsing/ft_tokenizer.c \
 		Utils/cmd_utils.c \
+		Utils/errors.c \
 		Utils/ft_cleanup.c \
 		Utils/ft_envsize.c \
 		Utils/ft_shell_loop.c \

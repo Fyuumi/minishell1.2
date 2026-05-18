@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 18:17:09 by codespace         #+#    #+#             */
-/*   Updated: 2026/05/15 14:44:01 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/18 11:37:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int ft_execute(t_cmd *cmds, t_env *env)
 
     //If only ONE command and it is a builtin -> NO FORK
     if (!cmds->next && ft_is_builtin(cmds->argv[0]))
+    {
+        ft_apply_redirs(cmds->redirs); // apply redirs IN PARENT
         return (ft_exec_single_builtin(cmds, env));
+    } 
     
     while (cur)
     {
@@ -52,11 +55,11 @@ int ft_execute(t_cmd *cmds, t_env *env)
             }
             ft_apply_redirs(cur->redirs); // dup2 for > < >> <<
             if (ft_is_builtin(cur->argv[0]))
-                exit(ft_exec_builtin(cur, env));
+                ft_exit(ft_exec_builtin(cur, env));
             else
             {
                 ft_run_execve(cur->argv, env); // our ft_get_cmd_path from Pipex
-                exit(1);
+                ft_exit(1);
             }
         }
         // Parent

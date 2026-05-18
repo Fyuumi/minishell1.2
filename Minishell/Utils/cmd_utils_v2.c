@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_utils.c                                        :+:      :+:    :+:   */
+/*   cmd_utils_v2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 14:53:20 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/04/23 15:19:14 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/18 11:10:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_free_strings(char **args)
-{
-	int i;
-
-	if (!args)
-		return;
-	i= 0;
-	while(args[i])
-		free(args[i++]);
-	free(args);
-}
-
- char	*ft_get_path(char **envp)
+char	*ft_get_path(char **envp)
  {
  	int	i;
 
@@ -95,4 +83,4 @@ int	ft_is_exe(char *path)
  	ft_free_strings(paths);
 	return (cmd_path);
  }
-
+ 
