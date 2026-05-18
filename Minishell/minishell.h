@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 10:30:46 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/15 11:08:07 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/18 11:11:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,27 +92,29 @@ typedef struct s_expand_ctx
 }					t_expand_ctx;
 
 /*Global variable signal*/
-
 extern int			g_signal_received;
 // Only global allowed. Handles SIGINT and SIGQUIT.
 
-/*In cmd_utils.c*/
-void				ft_free_strings(char **args);
-char				*ft_get_path(char **envp);
-int					ft_is_exe(char *path);
-char				*ft_get_cmd_path(char *cmd, char **envp);
 
-/*In Builtins*/
+
+/***** In Builtins/ *****/
+//ft_cd:
+int					ft_cd(char **args, t_env *env);
+//ft_echo:
 int					ft_echo(char **args);
+//ft_env:
 int					ft_env(t_env *env);
 void				ft_env_update(t_env *env, const char *key,
 						const char *value);
+//ft_exit:
+void				ctrl_c(int signal);
+void				ctrl_d(int signal);
 void				ft_sig(void);
+//ft_export:
+int 				ft_export(char **args, t_env *env);
+int					ft_unset(char **args, t_env *env);
+//ft_pwd:
 int					ft_pwd(void);
-int					ft_cd(char **args, t_env *env);
-int 				ft_export(t_env *env, char *key);
-int					ft_unset(t_env *env, char *key);
-
 // in init_env
 t_env_var			*ft_new_node(const char *key, const char *value);
 char				**ft_env_to_envp(t_env *env);
@@ -120,24 +122,35 @@ t_env_var			*ft_new_env_var(char *envp);
 void				ft_append_env_var(t_env *env, t_env_var *node);
 t_env				*ft_init_env(char **envp);
 
-// in ft_lstsize.c => change file name to avoid confusion with Libft function
-int					ft_envsize(t_env *env);
+// in ft_lstsizes.c
+int					ft_listsizes(t_env *env);
 
-// parsing :
-
-// in tokenizer
+/******* In Parsing   *****/
+// in ft_tokenizer
 void				ft_tokenizer(char **input, t_token **token_list);
 
-// in parser
+// in ft_parser
 void				print_tokens(t_token *tokens);
 void				print_cmds(t_cmd *cmds);
 t_cmd				*ft_parser(t_token *token_list);
+
+/***** In Utils/ *****/
+//cmd_utils_v2:
+char				*ft_get_path(char **envp);
+int					ft_is_exe(char *path);
+char				*ft_get_cmd_path(char *cmd, char **envp);
+char	*get_path(char **envp);
+char	*get_cmd_path(char *cmd, char **envp);
+void	ft_run_execve(char **argv, t_env *env);
+//free_and_errors:
+void	free_strtab(char **strtab);
+
 
 /*EXECUTOR => change name when file created*/
 int	ft_execute(t_cmd *cmds, t_env *env);
 int	ft_exec_single_builtin(t_cmd *cmd, t_env *env); // save/restore stdio
 int	ft_is_builtin(char *cmd_name);
-int	ft_exec_builtin(t_cmd *cmd, t_env *env, int exit_flag); // for child
+int	ft_exec_builtin(t_cmd *cmd, t_env *env);
 
 /*REDIRECTIONS => change name when file created*/
 void ft_apply_redirs(t_redir *redirs);
@@ -148,10 +161,12 @@ void ft_expand_cmds(t_cmd *cmds, t_env *env, int last_status);
 char *ft_expand_str(char *str, t_env *env, int last_status);
 
 /*UTILS / CLEANUP => change name when file created*/
-void ft_free_tokens(t_token *tk);
-void ft_free_redirs(t_redir *rd);
-void ft_free_cmds(t_cmd *cmd);
-int ft_cmdsize(t_cmd *cmds); // iterate cmd list for pid allocation
+void	free_strtab(char **strtab); // in Utils/errors.c
+void 	ft_free_tokens(t_token *tk);
+void 	ft_free_redirs(t_redir *rd);
+void	ft_free_cmds(t_cmd *cmd);
+
+
 
 /*MAIN LOOP => change name when file created*/
 void ft_shell_loop(t_env *env);

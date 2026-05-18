@@ -1,10 +1,11 @@
 #include "minishell.h"
 
-int ft_envsize(t_env *env)
+int ft_listsizes(void* content)
 {
     t_env_var *temp;
     int count;
 
+    temp(t_env_var) = content;
     if (!env)
         return (0);
     count = 0;

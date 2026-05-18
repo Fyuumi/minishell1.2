@@ -6,37 +6,42 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 12:50:16 by codespace         #+#    #+#             */
-/*   Updated: 2026/04/23 22:18:05 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/17 15:11:42 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_unset(t_env *env, char *key)
-{
-    t_env_var *temp;
-    t_env_var *past;
+// int ft_unset(t_env *env, char *key)
+// {
+//     t_env_var *temp;
+//     t_env_var *past;
     
-    if(!key)
-        return (1);
-    temp = env->vars;
-    past = NULL;
+//     if(!key)
+//         return (1);
+//     temp = env->vars;
+//     past = NULL;
   
-    while(temp)
-    {
-         if (ft_strncmp(temp->key, key, ft_strlen(key)) == 0)
-            {
-                if (past)
-                    past->next = temp->next;
-                else
-                    env->vars = temp->next;
-                free(temp->key);
-                free(temp->value);
-                free(temp);
-                return (0);
-            }
-        past = temp;
-        temp = temp->next;
-    }
-    return (0);
+//     while(temp)
+//     {
+//          if (ft_strncmp(temp->key, key, ft_strlen(key)) == 0)
+//             {
+//                 if (past)
+//                     past->next = temp->next;
+//                 else
+//                     env->vars = temp->next;
+//                 free(temp->key);
+//                 free(temp->value);
+//                 free(temp);
+//                 return (0);
+//             }
+//         past = temp;
+//         temp = temp->next;
+//     }
+//     return (0);
+// }
+
+int ft_unset(char **args, t_env *env)
+{
+    //here new version
 }
