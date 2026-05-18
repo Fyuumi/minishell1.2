@@ -80,7 +80,7 @@ int	ft_is_exe(char *path)
  		cmd_path = ft_join_check_path(paths[i], cmd);
  		i++;
  	}
- 	ft_free_strings(paths);
+ 	ft_free_strtab(paths);
 	return (cmd_path);
  }
  

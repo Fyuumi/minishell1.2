@@ -13,19 +13,17 @@
 #include "minishell.h"
 
 // creates a list with the tokens
-void	ft_append_token(t_token **token_list, t_token *token_node)
+t_token	*ft_append_token(t_token *token_list, t_token *token_node)
 {
 	t_token	*current;
 
-	if(!*token_list)
-	{
-		*token_list = token_node;
-		return;
-	}
-	current = *token_list;
+	if(token_list == NULL)
+		return(token_node);
+	current = token_list;
 	while (current->next)
 		current = current->next;
 	current->next = token_node;
+	return (token_list);
 }
 t_type	ft_typecheck(char *input)
 {
@@ -58,7 +56,7 @@ t_token	*ft_create_token_node(t_type token_type, char *input)
 	return (token_node);
 }
 
-void	ft_tokenizer(char **input, t_token **token_list)
+t_token	*ft_tokenizer(char **input, t_token *token_list)
 {
 	t_token	*token;
 	t_type	type;
@@ -69,7 +67,8 @@ void	ft_tokenizer(char **input, t_token **token_list)
 	{
 		type = ft_typecheck(input[i]);
 		token = ft_create_token_node(type, input[i]);
-		ft_append_token(token_list, token);
+		token_list = ft_append_token(token_list, token);
 		i++;
 	}
+	return (token_list);
 }

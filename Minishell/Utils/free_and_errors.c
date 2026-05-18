@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	free_strtab(char **strtab)
+void	ft_free_strtab(char **strtab)
 {
 	int	i;
 

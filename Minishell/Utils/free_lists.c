@@ -15,7 +15,6 @@
 // frees all the lists token_list redirections_list cmd_list
 void 	ft_free_tokens(t_token *tk)
 {
-    t_token *next;
     t_token *current;
 
     current = tk;
@@ -29,7 +28,6 @@ void 	ft_free_tokens(t_token *tk)
 
 void 	ft_free_redirs(t_redir *rd)
 {
-    t_redir *next;
     t_redir *current;
 
     current = rd;
@@ -44,13 +42,15 @@ void 	ft_free_redirs(t_redir *rd)
 void	ft_free_cmds(t_cmd *cmd)
 {
     t_cmd *next;
-    t_cmd *current;
 
-    current = cmd;
-    while(current)
+    while(cmd)
     {
-        free_strtab(current->argv);
-        current = current->next;
+        next = cmd->next;
+        if (cmd->argv)
+            ft_free_strtab(cmd->argv);
+        if (cmd->redirs)
+            ft_free_redirs(cmd->redirs);
+        free(cmd);
+        cmd = next;
     }
-    free(cmd);
 }
