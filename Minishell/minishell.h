@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 10:30:46 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/18 11:11:38 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/18 15:44:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,12 @@ t_env				*ft_init_env(char **envp);
 // in ft_lstsizes.c
 int 				ft_listsizes(void* content);
 
-/******* In Parsing   *****/
+/***** In Execution/ *****/
+//ft_apply_redirs:
+void ft_apply_redirs(t_redir *redirs);
+//ft_builtin:
+
+/***** In Parsing/   *****/
 // in ft_tokenizer
 t_token				*ft_tokenizer(char **input, t_token *token_list);
 
@@ -159,6 +164,9 @@ int	ft_exec_single_builtin(t_cmd *cmd, t_env *env); // save/restore stdio
 int	ft_builtin_check(char *cmd_name);
 int	ft_exec_builtin(t_cmd *cmd, t_env *env);
 
+/*REDIRECTIONS => change name when file created*/
+
+int ft_collect_heredocs(t_cmd *cmds); // pre-fork => fills redir -> fd
 
 
 // /*REDIRECTIONS => change name when file created*/
