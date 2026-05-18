@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 17:33:14 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/11 16:20:34 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/18 16:29:15 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ static int is_flag_n(char *arg)
     return (0);
 }
 
-void ft_writeforecho(char *str) // writes a string without the start "" and ends them after the secound one
+/*writes a string without the start "" and ends them after the secound one*/
+static void ft_write_for_echo(char *str)
 {
     int i;
-
+    
     i = 1;
     while(str[i] != '"' && str[i])
     {
@@ -57,7 +58,7 @@ int ft_echo(char **args)
     while(args[i])
     {
         if (args[i][0] == '"')        // if " found like in :i echo "hey"
-            ft_writeforecho(args[i]);
+            ft_write_for_echo(args[i]);
         else
             ft_putstr_fd(args[i], 1);
         if (args[i + 1])
