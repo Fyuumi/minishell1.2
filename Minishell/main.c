@@ -10,14 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Goal here:
-minishell$ ls -l
-minishell$ echo hello
-minishell$ pwd
-minishell$ nosuchcmd
-minishell$ exit
-*/
-
 #include "minishell.h"
 
 int	main(int argc, char **argv, char **envp)
@@ -48,9 +40,8 @@ int	main(int argc, char **argv, char **envp)
 		ft_tokenizer(cmd_input, &token_list);
 		//print_tokens(token_list);
 		cmd_list = ft_parser(token_list);
-		print_cmds(cmd_list);
-		//ft_check_do_cmd(cmd_input, env, &cmd_list);
-		// parse and execute the command
+		print_cmds(cmd_list); //prints the list of arguments
+		ft_exec_builtin(cmd_list, env);
 		free(input);
 	}
 }
