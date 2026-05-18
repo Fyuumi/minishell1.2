@@ -39,12 +39,11 @@ SRCS = 	main.c \
 		Parsing/cmd_utils.c \
 		Parsing/ft_parser.c \
 		Parsing/ft_tokenizer.c \
-		Utils/cmd_utils.c \
-		Utils/errors.c \
-		Utils/ft_cleanup.c \
-		Utils/ft_envsize.c \
+		Utils/cmd_utils_v2.c \
+		Utils/free_and_errors.c \
+		Utils/free_lists.c \
+		Utils/ft_listsizes.c \
 		Utils/ft_shell_loop.c \
-		Utils/ft_sig.c \
 		Utils/init_env.c \
 
 INCLUDE = -I. -I$(LIBFT_PATH)

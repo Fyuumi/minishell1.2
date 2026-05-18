@@ -40,3 +40,8 @@ void	ft_sig(void)
 	signal(SIGINT, ctrl_d);   // control d closing
 	signal(SIGINT, ctrl_c);   // gives control c a new thing to do	
 }
+
+void ft_exit(int n)
+{
+	exit(n);
+}

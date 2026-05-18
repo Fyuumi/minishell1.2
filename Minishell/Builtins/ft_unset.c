@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-// int ft_unset(t_env *env, char *key)
+// int ft_unset(char **key, t_env *env)
 // {
 //     t_env_var *temp;
 //     t_env_var *past;
@@ -43,5 +43,8 @@
 
 int ft_unset(char **args, t_env *env)
 {
+    args[0] = NULL;
+    env->vars = NULL;
     //here new version
+    return (0);
 }

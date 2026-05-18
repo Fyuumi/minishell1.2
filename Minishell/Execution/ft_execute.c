@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
+
 /*The fork/pipe loop (ft_execute). Adapted from Pipex code converted to walk a
 t_cmd *cmds list. Also ft_run_execve (path + execve)*/
-
 int ft_execute(t_cmd *cmds, t_env *env)
 {
     int     pipe_fd[2];
@@ -28,10 +28,10 @@ int ft_execute(t_cmd *cmds, t_env *env)
     cur = cmds;
 
     //If only ONE command and it is a builtin -> NO FORK
-    if (!cmds->next && ft_is_builtin(cmds->argv[0]))
+    if (!cmds->next && ft_builtin_check(cmds->argv[0]) == 0)
     {
-        ft_apply_redirs(cmds->redirs); // apply redirs IN PARENT
-        return (ft_exec_single_builtin(cmds, env));
+        //ft_apply_redirs(cmds->redirs); // apply redirs IN PARENT
+        return (ft_exec_single_builtin(cmds, env)); // still in progress
     } 
     
     while (cur)
@@ -53,12 +53,12 @@ int ft_execute(t_cmd *cmds, t_env *env)
                 close(pipe_fd[1]);
                 close(pipe_fd[0]);
             }
-            ft_apply_redirs(cur->redirs); // dup2 for > < >> <<
-            if (ft_is_builtin(cur->argv[0]))
+            //ft_apply_redirs(cur->redirs); // dup2 for > < >> <<
+            if (ft_builtin_check(cur->argv[0]) == 0)
                 ft_exit(ft_exec_builtin(cur, env));
             else
             {
-                ft_run_execve(cur->argv, env); // our ft_get_cmd_path from Pipex
+                //ft_run_execve(cur->argv, env); // our ft_get_cmd_path from Pipex
                 ft_exit(1);
             }
         }
