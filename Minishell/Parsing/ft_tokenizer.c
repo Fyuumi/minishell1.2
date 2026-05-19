@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opaulman <opaulman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/09 14:34:19 by codespace         #+#    #+#             */
-/*   Updated: 2026/05/14 16:14:12 by opaulman         ###   ########.fr       */
+/*   Updated: 2026/05/19 17:01:19 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_type	ft_typecheck(char *input)
 		type = HEREDOC;
 	else if (ft_strncmp(input, ">>", 2) == 0)
 		type = APPEND;
-	else if (ft_strncmp(input, ">", 1) == 0)
-		type = REDIR_IN;
 	else if (ft_strncmp(input, "<", 1) == 0)
+		type = REDIR_IN;
+	else if (ft_strncmp(input, ">", 1) == 0)
 		type = REDIR_OUT;
 	else
 		type = WORD;
