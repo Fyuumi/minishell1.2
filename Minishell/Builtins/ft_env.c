@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 18:41:50 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/04/23 15:42:52 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/18 16:29:52 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,9 @@ static void print_env_var(t_env_var *var)
     write(STDOUT_FILENO, "\n", 1);
 }
 
-
 /*Spans the linked list and displays each variable
 Return 1 if env is not valid, otherwise 0
 no options or arguments as asked in the subject*/
-
 
 int ft_env(t_env *env)
 {

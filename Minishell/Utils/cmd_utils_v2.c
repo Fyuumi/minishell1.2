@@ -6,14 +6,14 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 14:53:20 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/18 11:10:16 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/18 15:59:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char	*ft_get_path(char **envp)
- {
+{
  	int	i;
 
  	if (!envp)
@@ -26,7 +26,7 @@ char	*ft_get_path(char **envp)
 		i++;
  	}
  	return (NULL);
- }
+}
 
 int	ft_is_exe(char *path)
 {
@@ -41,8 +41,8 @@ int	ft_is_exe(char *path)
 	return (1);
 }
 
- static char	*ft_join_check_path(char *dir, char *cmd)
- {
+static char	*ft_join_check_path(char *dir, char *cmd)
+{
  	char	*full_path;
  	char	*path_cmd;
 
@@ -58,10 +58,10 @@ int	ft_is_exe(char *path)
  		return (path_cmd);
  	free(path_cmd);
  	return (NULL);
- }
+}
  
- char	*ft_get_cmd_path(char *cmd, char **envp)
- {
+char	*ft_get_cmd_path(char *cmd, char **envp)
+{
  	char	*path_var;
  	char	**paths;
  	size_t	i;
@@ -82,5 +82,5 @@ int	ft_is_exe(char *path)
  	}
  	ft_free_strtab(paths);
 	return (cmd_path);
- }
+}
  
