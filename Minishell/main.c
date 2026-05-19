@@ -39,9 +39,9 @@ int	main(int argc, char **argv, char **envp)
 		cmd_input = ft_split(input, ' ');
 		token_list = ft_tokenizer(cmd_input, token_list);
 		print_tokens(token_list);
-		cmd_list = ft_parser(token_list);
-		//print_cmds(cmd_list); //prints the list of arguments
-		ft_exec_builtin(cmd_list, env);
+		cmd_list = ft_parse_operator(token_list);
+		print_cmds(cmd_list); //prints the list of arguments
+		ft_execute(cmd_list, env);
 		//ft_free_cmds(cmd_list); // responsible of core dumped with builtin echo
 		//free(input);
 		//ft_free_strtab(cmd_input);
