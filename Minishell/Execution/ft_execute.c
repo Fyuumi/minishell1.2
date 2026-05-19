@@ -15,6 +15,56 @@
 
 /*The fork/pipe loop (ft_execute). Adapted from Pipex code converted to walk a
 t_cmd *cmds list. Also ft_run_execve (path + execve)*/
+
+void	ft_run_execve(char **argv, t_env *env)
+{
+	char	*cmd_path;
+
+	if (!argv || !argv[0])
+		exit(0);
+	/*If user wrote a path (e.g. /bin/ls or ./a.out), do NOT search PATH*/
+	if (ft_strchr(argv[0], '/'))
+	{
+		execve(argv[0], argv, env->envp_array);
+		perror(argv[0]); // prints "No such file", "Permission denied", ...
+		if (errno == ENOENT)
+			exit(127);
+		exit(126);
+	}
+	/*Otherwise search PATH*/
+	cmd_path = get_cmd_path(argv[0], env->envp_array);
+	if (!cmd_path)
+	{
+		ft_putstr_fd(argv[0], STDERR_FILENO);
+		ft_putendl_fd(": command not found", STDERR_FILENO);
+		exit(127);
+	}
+	execve(cmd_path, argv, env->envp_array);
+	perror(argv[0]); // execve failed (rare: e.g. permission denied on resolved path)
+	free(cmd_path);
+	exit(126);
+}
+// void			ft_run_execve(char **str, t_env *env)
+// {       pid_t     pid;
+//         int		  status;
+
+//         if (str[0])
+//         {
+//             pid = fork();
+//             if (pid == 0)
+//             {
+//                 execve(str[0], str, ft_env_to_envp(env));
+//                 ft_exit(1);
+//             }
+//             waitpid(pid, &status, 0);
+//           }
+//           else
+//         {
+//           write(STDOUT_FILENO, "command not found", 17);
+//           write(STDOUT_FILENO, "\n", 1);
+//         }
+// }
+
 int ft_execute(t_cmd *cmds, t_env *env)
 {
     int     pipe_fd[2];
@@ -59,6 +109,7 @@ int ft_execute(t_cmd *cmds, t_env *env)
             else
             {
                 //ft_run_execve(cur->argv, env); // our ft_get_cmd_path from Pipex
+                ft_run_execve(cur->argv, env);
                 ft_exit(1);
             }
         }

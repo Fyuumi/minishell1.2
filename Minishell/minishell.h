@@ -125,6 +125,7 @@ int			ft_exec_single_builtin(t_cmd *cmd, t_env *env); // save/restore stdio
 int			ft_builtin_check(char *cmd_name);
 int			ft_exec_builtin(t_cmd *cmd, t_env *env);
 //ft_execute:
+void		ft_run_execve(char **argv, t_env *env);
 int 		ft_execute(t_cmd *cmds, t_env *env);
 //ft_heredoc:
 
@@ -138,7 +139,7 @@ t_token		*ft_tokenizer(char **input, t_token *token_list);
 // in ft_parser
 void		print_tokens(t_token *tokens);
 void		print_cmds(t_cmd *cmds);
-t_cmd		*ft_parser(t_token *token_list);
+t_cmd 		*ft_parse_operator(t_token *token_list);
 
 /***** In Utils/ *****/
 //cmd_utils_v2:
@@ -147,7 +148,7 @@ int			ft_is_exe(char *path);
 char		*ft_get_cmd_path(char *cmd, char **envp);
 char		*get_path(char **envp);
 char		*get_cmd_path(char *cmd, char **envp);
-void		ft_run_execve(char **argv, t_env *env);
+
 
 //free_and_errors:
 void		ft_free_strtab(char **strtab);
