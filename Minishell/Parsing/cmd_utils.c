@@ -74,31 +74,4 @@ char	*get_cmd_path(char *cmd, char **envp)
 	return (cmd_path);
 }
 
-void	ft_run_execve(char **argv, t_env *env)
-{
-	char	*cmd_path;
 
-	if (!argv || !argv[0])
-		exit(0);
-	/*If user wrote a path (e.g. /bin/ls or ./a.out), do NOT search PATH*/
-	if (ft_strchr(argv[0], '/'))
-	{
-		execve(argv[0], argv, env->envp_array);
-		perror(argv[0]); // prints "No such file", "Permission denied", ...
-		if (errno == ENOENT)
-			exit(127);
-		exit(126);
-	}
-	/*Otherwise search PATH*/
-	cmd_path = get_cmd_path(argv[0], env->envp_array);
-	if (!cmd_path)
-	{
-		ft_putstr_fd(argv[0], STDERR_FILENO);
-		ft_putendl_fd(": command not found", STDERR_FILENO);
-		exit(127);
-	}
-	execve(cmd_path, argv, env->envp_array);
-	perror(argv[0]); // execve failed (rare: e.g. permission denied on resolved path)
-	free(cmd_path);
-	exit(126);
-}

@@ -51,7 +51,6 @@ void	print_redirs(t_redir *redir)
 	i = 0;
 	while (redir)
 	{
-		printf("    Redirection %d:\n", i);
 		printf("      type : %s\n", token_type_to_str(redir->type));
 		printf("      file : %s\n", redir->file);
 		printf("      fd   : %d\n", redir->fd);
@@ -66,9 +65,9 @@ void	print_cmds(t_cmd *cmds)
 	int	j;
 
 	i = 0;
+	write(1,"=================================\n",35);
 	while (cmds)
 	{
-		write(1,"=================================\n",20);
 		printf("Command %d:\n", i);
 
 		/* Print argv */
@@ -97,7 +96,7 @@ void	print_cmds(t_cmd *cmds)
 		cmds = cmds->next;
 		i++;
 	}
-	printf("=================================\n");
+	write(1,"=================================\n",35);
 }
 
 int ft_tokensize(t_token *token)
@@ -122,21 +121,27 @@ t_redir	*ft_create_redir_node(t_token *token_node)
 	redir_node = malloc(sizeof(t_redir));
 	if (!redir_node)
 		return (0);
-	ft_strlcpy(redir_node->file, token_node->str, ft_strlen(token_node->str));
-	redir_node->next = NULL;
 	redir_node->type = token_node->type;
+	if (token_node->next)
+	{
+		token_node = token_node->next;
+		redir_node->file = token_node->str;
+	}
+	else
+		redir_node->file = NULL;
+	redir_node->next = NULL;
+	redir_node->fd = 0;
 	return (redir_node);
 }
 
-t_cmd	*ft_create_parser_node(t_token *token_list, t_cmd *parse_list)
+t_cmd	*ft_create_parser_node(t_token *token_list)
 {
 	t_cmd *parser_node;
 	int i;
 	char **temp;
 
 	i = 0;
-	parse_list = NULL;
-	temp = malloc(sizeof(char*) * (ft_tokensize(token_list) + 1));
+	temp = malloc(sizeof(char*) * (ft_tokensize(token_list) + 1)); // allocates char ** because just had char * before
 	if (!temp)
 		return (NULL);
 	while(token_list && token_list->type == WORD)
@@ -150,41 +155,51 @@ t_cmd	*ft_create_parser_node(t_token *token_list, t_cmd *parse_list)
 		return (NULL);
 	parser_node->argv = temp;
 	parser_node->next = NULL;
-	if(parse_list)
-	{
-		parse_list->next = parser_node;
-		parse_list->next->next = NULL;
-	}
-	else
-		parse_list = parser_node;
-	return (parse_list);
+	return (parser_node);
 }
 
-t_cmd	*ft_parser(t_token *token_list)
+t_cmd	*ft_parser(t_token *token_list, t_cmd *parse_list)
 {
-	t_cmd	*parse_list;    // parsing system
-	
-	parse_list = NULL;
+	t_cmd *pipe;
+
 	while (token_list && token_list->str)
 	{
-		if (token_list->type == REDIR_IN || token_list->type == REDIR_OUT)
+		if (token_list->type == WORD)
 		{
-			token_list = token_list->next; // skip the redirector
-			parse_list->redirs = ft_create_redir_node(token_list);
-				// copy tokens info to the redirector in parselist
-		}
-		else if (token_list->type == PIPE)
-		{
-			parse_list = parse_list->next; // arg++ because of Pipe
-		}
-		else if (token_list->type == WORD)
-		{
-			parse_list = ft_create_parser_node(token_list, parse_list);// adding to new Pipe
+			parse_list = ft_create_parser_node(token_list);// adding argv all words at once
 			parse_list->redirs = NULL;
 			while(token_list && token_list->next && token_list->next->type == WORD)
 				token_list = token_list->next;
 		}
+		if (token_list->type == PIPE)
+		{
+			token_list = token_list->next; //skips the pipe
+			if (token_list)
+			{
+				pipe = ft_create_parser_node(token_list);// adding to new Pipe
+				parse_list->next = pipe; // arg++ because of Pipe
+			}
+			else
+			{
+				parse_list->next = NULL;
+				break;
+			}
+		}
+		else if (token_list->type == REDIR_IN || token_list->type == REDIR_OUT)
+		{
+			parse_list->redirs = ft_create_redir_node(token_list);// copy tokens info to the redirector in parselist
+			token_list = token_list->next;
+		}
 		token_list = token_list->next;
 	}
+	return (parse_list);
+}
+
+t_cmd *ft_parse_operator(t_token *token_list)
+{
+	t_cmd *parse_list;
+
+	parse_list = NULL;
+	parse_list = ft_parser(token_list, parse_list);
 	return (parse_list);
 }
