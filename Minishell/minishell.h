@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 10:30:46 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/18 17:51:41 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/20 10:51:58 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ int ft_collect_heredocs(t_cmd *cmds); // pre-fork => fills redir -> fd
 // char *ft_expand_str(char *str, t_env *env, int last_status);
 
 // /*MAIN LOOP => change name when file created*/
-// void ft_shell_loop(t_env *env);
+ void ft_shell_loop(t_env *env);
 
 
 #endif
