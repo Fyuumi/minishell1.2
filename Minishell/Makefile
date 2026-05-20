@@ -6,14 +6,14 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/07 17:07:05 by cdenaux           #+#    #+#              #
-#    Updated: 2026/05/15 18:01:08 by codespace        ###   ########.fr        #
+#    Updated: 2026/05/20 15:55:59 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LDFLAGS = -lreadline
 
 #Commande pour creer la bibliotheque
