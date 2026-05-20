@@ -128,18 +128,23 @@ int			ft_exec_builtin(t_cmd *cmd, t_env *env);
 void		ft_run_execve(char **argv, t_env *env);
 int 		ft_execute(t_cmd *cmds, t_env *env);
 //ft_heredoc:
+int ft_collect_heredocs(t_cmd *cmds); // pre-fork => fills redir -> fd
+
 
 /***** In Expansion/ *****/
 //ft_expand:
+void ft_expand_cmds(t_cmd *cmds, t_env *env, int last_status);
+char *ft_expand_str(char *str, t_env *env, int last_status);
+
 
 /***** In Parsing/   *****/
 // in ft_tokenizer
 t_token		*ft_tokenizer(char **input, t_token *token_list);
-
 // in ft_parser
 void		print_tokens(t_token *tokens);
 void		print_cmds(t_cmd *cmds);
 t_cmd 		*ft_parse_operator(t_token *token_list);
+
 
 /***** In Utils/ *****/
 //cmd_utils_v2:
@@ -148,39 +153,23 @@ int			ft_is_exe(char *path);
 char		*ft_get_cmd_path(char *cmd, char **envp);
 char		*get_path(char **envp);
 char		*get_cmd_path(char *cmd, char **envp);
-
-
 //free_and_errors:
 void		ft_free_strtab(char **strtab);
 void 		ft_free_redirs(t_redir *rd);
 void		ft_free_cmds(t_cmd *cmd);
 //free_lists:
 void 		ft_free_tokens(t_token **tk);
-
 // in init_env
 t_env_var	*ft_new_node(const char *key, const char *value);
 char		**ft_env_to_envp(t_env *env);
 t_env_var	*ft_new_env_var(char *envp);
 void		ft_append_env_var(t_env *env, t_env_var *node);
 t_env		*ft_init_env(char **envp);
-
 // in ft_lstsizes.c
 int 		ft_listsizes(void* content);
 
-/*REDIRECTIONS => change name when file created*/
 
-int ft_collect_heredocs(t_cmd *cmds); // pre-fork => fills redir -> fd
-
-
-// /*REDIRECTIONS => change name when file created*/
-// void ft_apply_redirs(t_redir *redirs);
-// int ft_collect_heredocs(t_cmd *cmds); // pre-fork => fills redir -> fd
-
-// /*EXPANDER => change name when file created*/
-// void ft_expand_cmds(t_cmd *cmds, t_env *env, int last_status);
-// char *ft_expand_str(char *str, t_env *env, int last_status);
-
-// /*MAIN LOOP => change name when file created*/
+// in main.c
  void ft_shell_loop(t_env *env);
 
 

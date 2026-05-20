@@ -185,7 +185,8 @@ t_cmd	*ft_parser(t_token *token_list, t_cmd *parse_list)
 				break;
 			}
 		}
-		else if (token_list->type == REDIR_IN || token_list->type == REDIR_OUT)
+		else if (token_list->type == REDIR_IN || token_list->type == REDIR_OUT ||
+			 token_list->type == APPEND || token_list->type == HEREDOC)
 		{
 			parse_list->redirs = ft_create_redir_node(token_list);// copy tokens info to the redirector in parselist
 			token_list = token_list->next;
