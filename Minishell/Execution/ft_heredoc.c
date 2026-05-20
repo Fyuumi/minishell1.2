@@ -28,11 +28,11 @@ int ft_handle_heredoc(t_redir *redir)
         str = readline("> ");
         if(!str)
             break;
-            if (ft_strncmp(str, redir->file, ft_strlen(str)))
-            {
-                free(str);
-                break;
-            }
+        if (ft_strncmp(str, redir->file, ft_strlen(str)))
+        {
+            free(str);
+            break;
+        }
         write(pipefd[1], str, ft_strlen(str));
         write(pipefd[1], "\n", 1);
         free(str);
