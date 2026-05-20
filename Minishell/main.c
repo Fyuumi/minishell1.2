@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 14:39:45 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/19 17:25:30 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/20 10:43:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void ft_shell_loop(t_env *env)
 		//ft_free_tokens(&token_list);
 		//write(1, "\n", 1);
 	}
-	
-	
 }
 
 int	main(int argc, char **argv, char **envp)
