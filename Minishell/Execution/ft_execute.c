@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 18:17:09 by codespace         #+#    #+#             */
-/*   Updated: 2026/05/19 16:59:22 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/20 15:59:13 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_run_execve(char **argv, t_env *env)
 	if (!argv || !argv[0])
 		exit(0);
 	/*If user wrote a path (e.g. /bin/ls or ./a.out), do NOT search PATH*/
+    cmd_path = get_cmd_path(argv[0], env->envp_array);
 	if (ft_strchr(argv[0], '/'))
 	{
 		execve(argv[0], argv, env->envp_array);
@@ -32,7 +33,6 @@ void	ft_run_execve(char **argv, t_env *env)
 		exit(126);
 	}
 	/*Otherwise search PATH*/
-	cmd_path = get_cmd_path(argv[0], env->envp_array);
 	if (!cmd_path)
 	{
 		ft_putstr_fd(argv[0], STDERR_FILENO);

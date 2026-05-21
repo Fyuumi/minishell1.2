@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opaulman <opaulman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 14:53:20 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/14 13:31:17 by opaulman         ###   ########.fr       */
+/*   Updated: 2026/05/20 16:04:02 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,12 @@ t_env	*ft_init_env(char **envp)
 		return (NULL);
 	env->vars = NULL;
 	env->envp_array = NULL;
+	int j = 0;
+	while (envp[j])
+		j++;
+	env->envp_array = malloc(sizeof(char *) * j);
+	for (int k = 0; k < j; k++)
+		env->envp_array[k] = ft_strdup(envp[k]);
 	i = 0;
 	while (envp[i])
 	{

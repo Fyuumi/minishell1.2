@@ -6,14 +6,14 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/07 17:07:05 by cdenaux           #+#    #+#              #
-#    Updated: 2026/05/15 18:01:08 by codespace        ###   ########.fr        #
+#    Updated: 2026/05/20 16:14:05 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LDFLAGS = -lreadline
 
 #Commande pour creer la bibliotheque
@@ -43,7 +43,6 @@ SRCS = 	main.c \
 		Utils/free_and_errors.c \
 		Utils/free_lists.c \
 		Utils/ft_listsizes.c \
-		Utils/ft_shell_loop.c \
 		Utils/init_env.c \
 
 INCLUDE = -I. -I$(LIBFT_PATH)
