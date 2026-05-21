@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/09 14:34:19 by codespace         #+#    #+#             */
-/*   Updated: 2026/05/19 17:01:19 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/20 15:33:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ t_token	*ft_tokenizer(char **input, t_token *token_list)
 		token_list = ft_append_token(token_list, token);
 		i++;
 	}
+
 	return (token_list);
 }

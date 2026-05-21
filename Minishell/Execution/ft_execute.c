@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 18:17:09 by codespace         #+#    #+#             */
-/*   Updated: 2026/05/19 16:59:22 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/21 10:48:48 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_run_execve(char **argv, t_env *env)
 	if (!argv || !argv[0])
 		exit(0);
 	/*If user wrote a path (e.g. /bin/ls or ./a.out), do NOT search PATH*/
+    cmd_path = get_cmd_path(argv[0], env->envp_array);
 	if (ft_strchr(argv[0], '/'))
 	{
 		execve(argv[0], argv, env->envp_array);
@@ -32,7 +33,6 @@ void	ft_run_execve(char **argv, t_env *env)
 		exit(126);
 	}
 	/*Otherwise search PATH*/
-	cmd_path = get_cmd_path(argv[0], env->envp_array);
 	if (!cmd_path)
 	{
 		ft_putstr_fd(argv[0], STDERR_FILENO);
@@ -105,11 +105,11 @@ int ft_execute(t_cmd *cmds, t_env *env)
             }
             //ft_apply_redirs(cur->redirs); // dup2 for > < >> <<
             if (ft_builtin_check(cur->argv[0]) == 0)
-                ft_exit(ft_exec_builtin(cur, env));
+                ft_exit(NULL, ft_exec_builtin(cur, env)); // exit status ft_exit 1 ???
             else
             {
                 ft_run_execve(cur->argv, env); // our ft_get_cmd_path from Pipex
-                ft_exit(1);
+                exit(1);
             }
         }
         // Parent

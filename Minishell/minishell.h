@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 10:30:46 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/20 10:51:58 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/21 10:43:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,7 @@ int			ft_env(t_env *env);
 void		ft_env_update(t_env *env, const char *key,
 						const char *value);
 //ft_exit:
-void		ctrl_c(int signal);
-void		ctrl_d(int signal);
-void		ft_sig(void);
-void 		ft_exit(int n);
+int 		ft_exit(char **argv, int last_status);
 //ft_export:
 int 		ft_is_valid_identifier(char *str);
 int 		ft_export(char **args, t_env *env);
@@ -167,7 +164,10 @@ void		ft_append_env_var(t_env *env, t_env_var *node);
 t_env		*ft_init_env(char **envp);
 // in ft_lstsizes.c
 int 		ft_listsizes(void* content);
-
+// in signal_utils:
+void		ctrl_c(int signal);
+void		ctrl_d(int signal);
+void		ft_sig(void);
 
 // in main.c
  void ft_shell_loop(t_env *env);
