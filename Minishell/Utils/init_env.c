@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 14:53:20 by cdenaux           #+#    #+#             */
-/*   Updated: 2026/05/20 16:04:02 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/21 10:59:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,18 +111,24 @@ t_env	*ft_init_env(char **envp)
 	t_env		*env;
 	t_env_var	*node;
 	int			i;
+	int			j;
+	int 		k;
 
 	env = malloc(sizeof(t_env));
 	if (!env)
 		return (NULL);
 	env->vars = NULL;
 	env->envp_array = NULL;
-	int j = 0;
+	j = 0;
 	while (envp[j])
 		j++;
 	env->envp_array = malloc(sizeof(char *) * j);
-	for (int k = 0; k < j; k++)
+	k = 0;
+	while (k < j)
+	{
 		env->envp_array[k] = ft_strdup(envp[k]);
+		k++;
+	}
 	i = 0;
 	while (envp[i])
 	{
