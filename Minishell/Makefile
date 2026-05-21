@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/07 17:07:05 by cdenaux           #+#    #+#              #
-#    Updated: 2026/05/20 16:14:05 by codespace        ###   ########.fr        #
+#    Updated: 2026/05/21 10:41:56 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS = 	main.c \
 		Utils/free_lists.c \
 		Utils/ft_listsizes.c \
 		Utils/init_env.c \
+		Utils/signal_utils.c \
 
 INCLUDE = -I. -I$(LIBFT_PATH)
 

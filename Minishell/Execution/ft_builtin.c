@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 18:21:25 by codespace         #+#    #+#             */
-/*   Updated: 2026/05/18 17:06:08 by codespace        ###   ########.fr       */
+/*   Updated: 2026/05/21 10:45:59 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int ft_exec_builtin(t_cmd *cmd, t_env *env)
     if (ft_strncmp(cmd->argv[0], "env", 4) == 0)
         return (ft_env(env));
     if (ft_strncmp(cmd->argv[0], "exit", 5) == 0)
-        ft_exit(1); // *** ft_exit STILL IN PROGRESS ***
+        ft_exit(cmd->argv, 1); // *** Last status is 1 ???
     if (ft_strncmp(cmd->argv[0], "export", 7) == 0)
         return (ft_export(cmd->argv, env));
     if (ft_strncmp(cmd->argv[0], "pwd", 4) == 0)
